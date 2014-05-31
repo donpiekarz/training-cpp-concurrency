@@ -1,12 +1,13 @@
 #include "Socket.hpp"
 
 
+#include <cassert>
+
 namespace MyFramework
 {
 
-Socket::Ptr Socket::createSocket( std::string aHost, int aPort )
+Socket::Ptr Socket::createSocket( std::string & aHost, uint16_t aPort )
 {
-
     sockaddr_in lAddr;
     lAddr.sin_addr.s_addr = inet_addr( aHost.c_str() );
     lAddr.sin_family = AF_INET;
@@ -19,7 +20,17 @@ Socket::Ptr Socket::createSocket( std::string aHost, int aPort )
 
 Socket::Socket( sockaddr_in & aAddr )
 {
-    std::cout << aAddr.sin_port << std::endl;
+
+    int lRes;
+
+    //Create socket
+    iSocketDesc = socket( AF_INET , SOCK_STREAM , 0 );
+    assert( iSocketDesc > 0 );
+
+    lRes = connect( iSocketDesc , ( struct sockaddr * )&aAddr , sizeof( aAddr ) );
+    assert( lRes > 0 );
+
+    puts( "Connected\n" );
 }
 
 Socket::~Socket()

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <cstdint>
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -17,7 +18,7 @@ public:
     typedef int Desc;
     typedef std::shared_ptr<Socket> Ptr;
 
-    static Ptr createSocket( std::string, int );
+    static Ptr createSocket( std::string &, uint16_t );
     ~Socket();
 
     void read();
@@ -28,6 +29,8 @@ private:
     Socket( sockaddr_in & );
 
     Desc getDescriptor();
+
+    Desc iSocketDesc;
 
 };
 
