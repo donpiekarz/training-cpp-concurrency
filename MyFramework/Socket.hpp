@@ -1,21 +1,34 @@
 #pragma once
 
-#include <sys/socket.h>
+#include <iostream>
+#include <string>
+#include <memory>
 
-namespace MyFramework {
+#include <sys/socket.h>
+#include <arpa/inet.h>
+
+namespace MyFramework
+{
+
 
 class Socket
 {
 public:
     typedef int Desc;
-    Socket(){}
-    ~Socket(){}
+    typedef std::shared_ptr<Socket> Ptr;
+
+    static Ptr createSocket( std::string, int );
+    ~Socket();
 
     void read();
     void write();
 
-    const Desc getDescriptor();
-    
+private:
+
+    Socket( sockaddr_in & );
+
+    Desc getDescriptor();
+
 };
 
 
