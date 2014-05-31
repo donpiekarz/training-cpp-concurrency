@@ -3,6 +3,7 @@ set(
     COMPONENTS 
 
     hello
+    testSocket
 
     )
 
