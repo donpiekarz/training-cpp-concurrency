@@ -1,7 +1,8 @@
 #include "Socket.hpp"
 
-
 #include <cassert>
+#include <cerrno>
+#include <cstring>
 
 namespace MyFramework
 {
@@ -28,7 +29,7 @@ Socket::Socket( sockaddr_in & aAddr )
     assert( iSocketDesc > 0 );
 
     lRes = connect( iSocketDesc , ( struct sockaddr * )&aAddr , sizeof( aAddr ) );
-    assert( lRes > 0 );
+    assert( lRes == 0 );
 
     puts( "Connected\n" );
 }
