@@ -21,22 +21,18 @@ Socket::Ptr Socket::createSocket( std::string & aHost, uint16_t aPort )
 
 Socket::Socket( sockaddr_in & aAddr )
 {
-
     int lRes;
 
-    //Create socket
     iSocketDesc = socket( AF_INET , SOCK_STREAM , 0 );
     assert( iSocketDesc > 0 );
 
     lRes = connect( iSocketDesc , ( struct sockaddr * )&aAddr , sizeof( aAddr ) );
     assert( lRes == 0 );
-
-    puts( "Connected\n" );
 }
 
 Socket::~Socket()
 {
-
+    close( iSocketDesc );
 }
 
 } // MyFramework
