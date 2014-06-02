@@ -14,25 +14,32 @@ Socket::Ptr Socket::createSocket( std::string & aHost, uint16_t aPort )
     lAddr.sin_family = AF_INET;
     lAddr.sin_port = htons( aPort );
 
-    Socket::Ptr lSocket( new Socket( lAddr ) );
+    Socket::Ptr lSocket( new Socket );
+    lSocket->connect( lAddr );
 
     return lSocket;
 }
 
-Socket::Socket( sockaddr_in & aAddr )
+Socket::Socket( ): iSocketDesc( 0 )
 {
-    int lRes;
-
-    iSocketDesc = socket( AF_INET , SOCK_STREAM , 0 );
+    iSocketDesc = ::socket( AF_INET , SOCK_STREAM , 0 );
     assert( iSocketDesc > 0 );
-
-    lRes = connect( iSocketDesc , ( struct sockaddr * )&aAddr , sizeof( aAddr ) );
-    assert( lRes == 0 );
 }
 
 Socket::~Socket()
 {
-    close( iSocketDesc );
+    if( !iSocketDesc )
+    {
+        close( iSocketDesc );
+    }
+}
+
+void Socket::connect( sockaddr_in & aAddr )
+{
+    int lRes;
+
+    lRes = ::connect( iSocketDesc , ( struct sockaddr * )&aAddr , sizeof( aAddr ) );
+    assert( lRes == 0 );
 }
 
 } // MyFramework

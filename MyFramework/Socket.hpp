@@ -22,12 +22,14 @@ public:
     static Ptr createSocket( std::string &, uint16_t );
     ~Socket();
 
+    void connect( sockaddr_in & aAddr );
+
     void read();
     void write();
 
 private:
 
-    Socket( sockaddr_in & );
+    Socket();
 
     Desc getDescriptor();
 
