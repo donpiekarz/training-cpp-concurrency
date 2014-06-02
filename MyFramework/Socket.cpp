@@ -42,4 +42,23 @@ void Socket::connect( sockaddr_in & aAddr )
     assert( lRes == 0 );
 }
 
+void Socket::write( const char * aSrc, size_t aLen )
+{
+    int lRes;
+
+    lRes = ::send( iSocketDesc, aSrc , aLen, 0 ) ;
+    // unsupported partial send
+    assert( lRes != -1 and lRes == static_cast<int>( aLen ) );
+}
+
+void Socket::read( char * aDst, size_t aLen )
+{
+    int lRes;
+
+    lRes = recv( iSocketDesc, aDst, aLen , 0 );
+    // unsupported partial recv
+    assert( lRes != -1 and lRes == static_cast<int>( aLen ) );
+
+}
+
 } // MyFramework

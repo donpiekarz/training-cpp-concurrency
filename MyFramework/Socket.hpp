@@ -24,8 +24,8 @@ public:
 
     void connect( sockaddr_in & aAddr );
 
-    void read();
-    void write();
+    void write( const char *, size_t );
+    void read( char *, size_t );
 
 private:
 
